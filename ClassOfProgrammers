@@ -1,0 +1,207 @@
+package P5;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class ProgrammingClass {
+
+	public static void main(String[] args) {
+
+		// create the list
+		ArrayList<Student> studentList = new ArrayList<Student>();
+
+		// populate with test data
+		studentList.add(new Student("Steven", "Curran", 22, 40025489));
+		studentList.add(new Student("f1", "s1", 19, 4002531));
+		studentList.add(new Student("f1", "s1", 19, 4002532));
+		studentList.add(new Student("f1", "s1", 19, 4002533));
+		studentList.add(new Student("f1", "s1", 19, 4002534));
+		studentList.add(new Student("f1", "s1", 19, 4002535));
+		studentList.add(new Student("f1", "s1", 45, 4002536));
+		studentList.add(new Student("f1", "s1", 14, 4002537));
+		studentList.add(new Student("f1", "s1", 62, 4002538));
+		studentList.add(new Student("f1", "s1", 56, 4002539));
+		studentList.add(new Student("f1", "s1", 61, 4002510));
+		studentList.add(new Student("f1", "s1", 62, 4002511));
+		studentList.add(new Student("f1", "s1", 23, 4002512));
+		studentList.add(new Student("f1", "s1", 15, 4002513));
+		studentList.add(new Student("f1", "s1", 12, 4002514));
+
+		// show all
+		System.out.println("All students ");
+		printStudentsEnhancedFor(studentList);
+		System.out.println();
+		
+		// show all
+		System.out.println("All students ");
+		printStudentsIterator(studentList);
+		System.out.println();
+
+		// number of students ...
+		System.out.println("This class has " + studentList.size()
+				+ " students present.");
+
+		// average class size
+		System.out.println("The average age of the class is : "
+				+ getaverageAge(studentList));
+		// ArrayList<Student> filterClass = filterClass(studentList,
+		// getaverageAge(studentList)); // broken
+		
+		// filter the class based on average age 
+		ArrayList<Student> filterClass2 = filterClassIterator(studentList,
+				getaverageAge(studentList));
+		System.out.println("Filtered class size : "+filterClass2.size());
+		
+		// filter the class based on average age 
+		ArrayList<Student> filterClass3 = filterClassCopy(studentList,
+				getaverageAge(studentList));
+		
+		System.out.println("Filtered class size : "+filterClass3.size());
+
+		// create a programming list
+		ArrayList<Student> programmingList = new ArrayList<Student>();
+		ArrayList<Student> databaseList = new ArrayList<Student>();
+		
+		Student s1 = new Student("Jimmy", "Jones", 99, 1);
+		Student s2 = new Student("Aidan", "McGowan", 101, 2);
+		Student s3 = new Student("Claire", "Fitz", 18, 3);
+		Student s4 = new Student("Niamh", "Rea", 20, 4);
+		Student s5 = new Student("Una", "Lunar", 18, 5);
+		
+		programmingList.add(s1);
+		programmingList.add(s2);
+		programmingList.add(s5);
+		
+		databaseList.add(s1);
+		databaseList.add(s3);
+		databaseList.add(s4);
+		databaseList.add(s5);
+		
+		
+		// merge the list - non duplicates please
+		ArrayList<Student> merged = merge(programmingList, databaseList);
+		System.out.println("All students in merged list");
+		
+		printStudentsEnhancedFor(merged);
+		System.out.println();
+
+	}
+
+	/**
+	 * Prints all students using an iterator
+	 * 
+	 * @param studentList
+	 */
+	private static void printStudentsIterator(ArrayList<Student> studentList) {
+		Iterator<Student> it = studentList.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
+
+	}
+
+	/**
+	 * Prints all students using an enhanced FOR
+	 * 
+	 * @param studentList
+	 */
+	private static void printStudentsEnhancedFor(ArrayList<Student> studentList) {
+		for (Student s : studentList) {
+			System.out.println(s);
+		}
+	}
+
+	/**
+	 * Gets the average age of the studnets
+	 * 
+	 * @param studentList
+	 * @return
+	 */
+	private static double getaverageAge(ArrayList<Student> studentList) {
+		int temp = 0;
+		for (Student s : studentList) {
+			temp += s.getAge();
+		}
+		return Math.floor((temp / studentList.size()));
+	}
+
+	
+	/**
+	 * Removes a student from the list based on average age
+	 * @param studentList
+	 * @param averageAge
+	 * @return
+	 */
+	public static ArrayList<Student> filterClass(
+			ArrayList<Student> studentList, double averageAge) {
+		for (Student student : studentList) {
+			if (student.getAge() < averageAge) {
+				studentList.remove(student);
+			}
+		}
+		return studentList;
+
+	}
+
+	/**
+	 * Removes student from the list based on age (uses Iterator)
+	 * @param studentList
+	 * @param averageAge
+	 * @return
+	 */
+	private static ArrayList<Student> filterClassIterator(
+			ArrayList<Student> studentList, double averageAge) {
+		Iterator<Student> it = studentList.iterator();
+		while (it.hasNext()) {
+			Student next = it.next();
+			if (next.getAge() < averageAge) {
+				it.remove();
+			}
+		}
+
+		return studentList;
+
+	}
+
+	/**
+	 * Checks then copies students to a list based on average age
+	 * @param studentList
+	 * @param averageAge
+	 * @return
+	 */
+	private static ArrayList<Student> filterClassCopy(
+			ArrayList<Student> studentList, double averageAge) {
+		ArrayList<Student> backUp = new ArrayList<Student>();
+
+		for (Student student : backUp) {
+			if (student.getAge() > averageAge) {
+				backUp.add(student);
+			}
+		}
+
+		return backUp;
+	}
+
+	/**
+	 * Merges two lists
+	 * @param programmingList
+	 * @param databaseList
+	 * @return
+	 */
+	private static ArrayList<Student> merge(ArrayList<Student> programmingList,
+			ArrayList<Student> databaseList) {
+		ArrayList<Student> merge = new ArrayList<Student>();
+
+		// add all the programmers to the merge list
+		merge.addAll(programmingList);
+
+		// not check if there are any new students in the DB list.  If so add..
+		for (Student student : databaseList) {
+			if (!programmingList.contains(student)) {
+				System.out.println("Adding a merge");
+				merge.add(student);
+			}
+		}
+		return merge;
+	}
+}
